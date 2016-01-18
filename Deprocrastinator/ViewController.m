@@ -41,11 +41,14 @@
     }
     
 }
+- (IBAction)onEditButtonPressed:(UIBarButtonItem *)sender {
+    sender.title = @"Done";
+    
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@" %ld", (long)indexPath.row);
     [tableView cellForRowAtIndexPath:indexPath].textLabel.textColor = [UIColor greenColor];
-    
 }
 
 
