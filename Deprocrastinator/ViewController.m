@@ -34,8 +34,9 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellId"];
     cell.textLabel.text = [self.things objectAtIndex:indexPath.row];
-    
+    cell.textLabel.textColor = [self.colors objectAtIndex:indexPath.row];
     return cell;
+    
 }
 
 - (IBAction)onAddButtonPressed:(UIBarButtonItem *)sender {
@@ -45,6 +46,8 @@
         [self.tableView reloadData];
         self.textField.text = @"" ;
         [self.textField resignFirstResponder];
+        [self.colors addObject:[UIColor blackColor]];
+
     }
     
 }
@@ -72,7 +75,7 @@
     for (NSIndexPath *indexPath in self.tableView.indexPathsForVisibleRows) {
         CGRect cellFrame = [self.tableView cellForRowAtIndexPath:indexPath].frame;
         if (CGRectContainsPoint(cellFrame, point)) {
-            [self.tableView cellForRowAtIndexPath:indexPath].backgroundColor = [UIColor redColor];
+            [self.tableView cellForRowAtIndexPath:indexPath].textLabel.textColor = [UIColor redColor];
         }
     }
 }
@@ -109,6 +112,7 @@
     }
     else {
         [tableView cellForRowAtIndexPath:indexPath].textLabel.textColor = [UIColor greenColor];
+        [self.colors replaceObjectAtIndex:indexPath.row withObject:[UIColor greenColor]];
    
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
