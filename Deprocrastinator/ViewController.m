@@ -60,6 +60,18 @@
     
 }
 
+- (IBAction)onSwipeRight:(UISwipeGestureRecognizer *)sender {
+    CGPoint point = [sender locationInView:self.view];
+    NSLog(@"%f",point.x);
+    for (NSIndexPath *indexPath in self.tableView.indexPathsForVisibleRows) {
+        CGRect cellFrame = [self.tableView cellForRowAtIndexPath:indexPath].frame;
+        if (CGRectContainsPoint(cellFrame, point)) {
+            [self.tableView cellForRowAtIndexPath:indexPath].backgroundColor = [UIColor redColor];
+        }
+    }
+}
+
+
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [self.things removeObjectAtIndex:indexPath.row];

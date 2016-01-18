@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="yQF-3G-gqh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="yQF-3G-gqh">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -25,9 +25,10 @@
                                         <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eYG-GB-d8a" id="lbq-gE-ZFb">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
+                                        <gestureRecognizers/>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -37,12 +38,16 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="mqU-MC-eQG" secondAttribute="trailing" id="5kI-12-t3N"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="mqU-MC-eQG" secondAttribute="bottom" id="cF0-pb-xIy"/>
                             <constraint firstItem="mqU-MC-eQG" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-64" id="jL2-Hl-9un"/>
                             <constraint firstItem="mqU-MC-eQG" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="thS-XL-pgc"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="HtX-Ia-Tgb" appends="YES" id="93P-2X-oV2"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="UWt-dW-fZm">
                         <nil key="title"/>
@@ -69,6 +74,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="HtX-Ia-Tgb">
+                    <connections>
+                        <action selector="onSwipeRight:" destination="BYZ-38-t0r" id="wc5-k5-M7Y"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1257" y="462"/>
         </scene>
