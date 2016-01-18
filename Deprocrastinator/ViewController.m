@@ -12,13 +12,17 @@
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property NSMutableArray *things;
+@property BOOL editing;
+
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.things = [[NSMutableArray alloc]init];
+    self.things = [NSMutableArray arrayWithObjects:@"thing 1", @"thing 2", nil ];
+    self.editing = NO;
+    
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.things.count;
@@ -42,13 +46,43 @@
     
 }
 - (IBAction)onEditButtonPressed:(UIBarButtonItem *)sender {
-    sender.title = @"Done";
+    
+    if (self.editing == YES) {
+        sender.title = @"Edit";
+        self.editing = NO;
+    }
+    else {
+        sender.title = @"Done";
+        self.editing = YES;
+    }
+    
+    
+    
+}
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [self.things removeObjectAtIndex:indexPath.row];
+        [tableView reloadData];
+    }
+    
+}
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
     
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@" %ld", (long)indexPath.row);
-    [tableView cellForRowAtIndexPath:indexPath].textLabel.textColor = [UIColor greenColor];
+    if (self.editing == YES) {
+        [self.things removeObjectAtIndex:indexPath.row];
+        [tableView reloadData];
+    }
+    else {
+        [tableView cellForRowAtIndexPath:indexPath].textLabel.textColor = [UIColor greenColor];
+   
+    }
+        
 }
 
 
