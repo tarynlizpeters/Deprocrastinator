@@ -8,16 +8,30 @@
 
 #import "ViewController.h"
 
-@interface ViewController ()
-
+@interface ViewController () <UITableViewDataSource, UITableViewDelegate>
+@property (weak, nonatomic) IBOutlet UITextField *textField;
+@property NSMutableArray *things;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    self.things = [[NSMutableArray alloc]init];
 }
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.things.count;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellId"];
+    return cell;
+}
+
+- (IBAction)onAddButtonPressed:(UIBarButtonItem *)sender {
+    
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
