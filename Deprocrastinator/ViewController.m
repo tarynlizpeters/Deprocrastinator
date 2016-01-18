@@ -23,6 +23,7 @@
     self.things = [NSMutableArray arrayWithObjects:@"thing 1", @"thing 2", nil ];
     self.editing = NO;
     
+    
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.things.count;
@@ -50,10 +51,13 @@
     if (self.editing == YES) {
         sender.title = @"Edit";
         self.editing = NO;
+        [self.tableView setEditing:NO animated:NO];
     }
     else {
         sender.title = @"Done";
         self.editing = YES;
+        [self.tableView setEditing:YES animated:YES];
+
     }
     
     
@@ -74,9 +78,14 @@
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.things removeObjectAtIndex:indexPath.row];
-        [tableView reloadData];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@""
+                                                                       message:@""
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+//        [self.things removeObjectAtIndex:indexPath.row];
+//        [tableView reloadData];
+    
     }
+    
     
 }
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -95,6 +104,19 @@
    
     }
         
+}
+
+-(BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+
+    
+}
+
+-(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+    NSString *moveObject = [self.things objectAtIndex:sourceIndexPath.row];
+    [self.things removeObjectAtIndex:sourceIndexPath.row];
+    [self.things insertObject:moveObject atIndex:destinationIndexPath.row];
+    
 }
 
 
