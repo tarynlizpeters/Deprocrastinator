@@ -70,14 +70,37 @@
 }
 
 - (IBAction)onSwipeRight:(UISwipeGestureRecognizer *)sender {
-    CGPoint point = [sender locationInView:self.view];
+    CGPoint point = [sender locationInView:self.tableView];
     NSLog(@"%f",point.x);
-    for (NSIndexPath *indexPath in self.tableView.indexPathsForVisibleRows) {
-        CGRect cellFrame = [self.tableView cellForRowAtIndexPath:indexPath].frame;
-        if (CGRectContainsPoint(cellFrame, point)) {
-            [self.tableView cellForRowAtIndexPath:indexPath].textLabel.textColor = [UIColor redColor];
-        }
+    NSIndexPath *swipedRow = [self.tableView indexPathForRowAtPoint:point];
+    
+    
+    if ([self.tableView cellForRowAtIndexPath:swipedRow].textLabel.textColor == [UIColor blackColor]) {
+        
+        [self.colors replaceObjectAtIndex:swipedRow.row withObject:[UIColor redColor]];
+        [self.tableView cellForRowAtIndexPath:swipedRow].textLabel.textColor = [UIColor redColor];
+    
+    } else  if ([self.tableView cellForRowAtIndexPath:swipedRow].textLabel.textColor == [UIColor redColor]){
+        
+        [self.tableView cellForRowAtIndexPath:swipedRow].textLabel.textColor = [UIColor yellowColor];
+        [self.colors replaceObjectAtIndex:swipedRow.row withObject:[UIColor yellowColor]];
+        
+    } else  if ([self.tableView cellForRowAtIndexPath:swipedRow].textLabel.textColor == [UIColor yellowColor]){
+        
+        [self.tableView cellForRowAtIndexPath:swipedRow].textLabel.textColor = [UIColor greenColor];
+        [self.colors replaceObjectAtIndex:swipedRow.row withObject:[UIColor greenColor]];
+        
+    } else {
+        [self.tableView cellForRowAtIndexPath:swipedRow].textLabel.textColor = [UIColor blackColor];
+        [self.colors replaceObjectAtIndex:swipedRow.row withObject:[UIColor blackColor]];
     }
+
+//    //for (NSIndexPath *indexPath in self.tableView.indexPathsForVisibleRows) {
+//        //CGRect cellFrame = [self.tableView cellForRowAtIndexPath:indexPath].frame;
+//        if (CGRectContainsPoint(cellFrame, point)) {
+//            [self.tableView cellForRowAtIndexPath:indexPath].textLabel.textColor = [UIColor redColor];
+//        }
+//    }
 }
 
 
