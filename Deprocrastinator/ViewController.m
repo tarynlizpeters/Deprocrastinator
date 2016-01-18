@@ -12,6 +12,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property NSMutableArray *things;
+@property NSMutableArray *colors;
 @property BOOL editing;
 
 @end
@@ -21,6 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.things = [NSMutableArray arrayWithObjects:@"thing 1", @"thing 2", nil ];
+    self.colors = [NSMutableArray arrayWithObjects:[UIColor blackColor],[UIColor blackColor], nil];
     self.editing = NO;
     
     
@@ -51,7 +53,7 @@
     if (self.editing == YES) {
         sender.title = @"Edit";
         self.editing = NO;
-        [self.tableView setEditing:NO animated:NO];
+        [self.tableView setEditing:NO animated:YES];
     }
     else {
         sender.title = @"Done";
@@ -78,12 +80,18 @@
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@""
-                                                                       message:@""
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Are you sure?"
+                                                                       message:@"This cannot be undone"
                                                                 preferredStyle:UIAlertControllerStyleAlert];
-//        [self.things removeObjectAtIndex:indexPath.row];
-//        [tableView reloadData];
-    
+        
+        [alert addAction:[UIAlertAction actionWithTitle:@"Delete" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+                    [self.things removeObjectAtIndex:indexPath.row];
+                    [tableView reloadData];
+        }]];
+        
+        [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+
+        [self presentViewController:alert animated:YES completion:nil];
     }
     
     
@@ -103,7 +111,7 @@
         [tableView cellForRowAtIndexPath:indexPath].textLabel.textColor = [UIColor greenColor];
    
     }
-        
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 -(BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
