@@ -21,7 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.things = [NSMutableArray arrayWithObjects:@"thing 1", @"thing 2", nil ];
+    self.things = [NSMutableArray arrayWithObjects:@"Task 1", @"Task 2", nil];
     self.colors = [NSMutableArray arrayWithObjects:[UIColor blackColor],[UIColor blackColor], nil];
     self.editing = NO;
     
@@ -44,7 +44,7 @@
     if (![self.textField.text isEqualToString:@"" ]) {
         [self.things addObject:self.textField.text];
         [self.tableView reloadData];
-        self.textField.text = @"" ;
+        self.textField.text = @"";
         [self.textField resignFirstResponder];
         [self.colors addObject:[UIColor blackColor]];
 
@@ -66,14 +66,16 @@
     }
     
     
-    
 }
 
 - (IBAction)onSwipeRight:(UISwipeGestureRecognizer *)sender {
+    //setting swipe parameters
+    
     CGPoint point = [sender locationInView:self.tableView];
     NSLog(@"%f",point.x);
     NSIndexPath *swipedRow = [self.tableView indexPathForRowAtPoint:point];
     
+    //changing colors on swipe
     
     if ([self.tableView cellForRowAtIndexPath:swipedRow].textLabel.textColor == [UIColor blackColor]) {
         
@@ -95,16 +97,12 @@
         [self.colors replaceObjectAtIndex:swipedRow.row withObject:[UIColor blackColor]];
     }
 
-//    //for (NSIndexPath *indexPath in self.tableView.indexPathsForVisibleRows) {
-//        //CGRect cellFrame = [self.tableView cellForRowAtIndexPath:indexPath].frame;
-//        if (CGRectContainsPoint(cellFrame, point)) {
-//            [self.tableView cellForRowAtIndexPath:indexPath].textLabel.textColor = [UIColor redColor];
-//        }
-//    }
+
 }
 
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    //when does it show the delete button?
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Are you sure?"
                                                                        message:@"This cannot be undone"
@@ -112,6 +110,7 @@
         
         [alert addAction:[UIAlertAction actionWithTitle:@"Delete" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
                     [self.things removeObjectAtIndex:indexPath.row];
+            //add colors or else the next one stays green
                     [tableView reloadData];
         }]];
         
@@ -123,14 +122,16 @@
     
 }
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
+    return YES; //this says we can edit the cells - tableview asks the view controller
     
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    //called when a user selects a row and it pulls the row. here we are changing it to green
     NSLog(@" %ld", (long)indexPath.row);
     if (self.editing == YES) {
         [self.things removeObjectAtIndex:indexPath.row];
+        [self.colors removeObjectAtIndex:indexPath.row];
         [tableView reloadData];
     }
     else {
@@ -142,7 +143,7 @@
 }
 
 -(BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
+    return YES; //allows the rows to be moved around
 
     
 }
